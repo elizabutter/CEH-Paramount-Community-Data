@@ -27,10 +27,10 @@ rawCommMonitorData <- read_sheet(ss = communityMonitorResultsKey, sheet = 2,
 # }
 
 #remove all the days where there was no data recorded for BOTH air monitors
-#remove the EPA threshold column
+#keep only the columns we want (the ones with data)
 cleanCommMonitorData <-rawCommMonitorData%>%
   filter(!is.na(rawCommMonitorData[2]) | !is.na(rawCommMonitorData[3]) ) %>%
-  select(-`EPA Risk Threshold Limit (0.01 ng/m3)`)
+  select(`Sample Date`, `Vermont Ave. and 70th St. (PQ100)`, `Somerset Blvd and Colorado Ave (OMNI)`)
 cleanCommMonitorData
 
 #Add in some extra data for testing purposes

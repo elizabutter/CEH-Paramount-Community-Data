@@ -114,6 +114,13 @@ body <- bs4DashBody(
   tags$style(
     HTML(
       "
+      
+      div.polaroid {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  margin: 15px;
+}
+
             p{ font-size:1.0em
             }
             
@@ -231,7 +238,7 @@ body <- bs4DashBody(
                          plotlyOutput(outputId = "primaryAirMonitorGraph", height = "600"),
                          
                          data.step = 1,
-                         data.intro = HTML("<h5>1. The Main Graph</h5>
+                         data.intro = HTML("<h5>Air Monitoring Data Graph</h5>
                                             <p>Here, you can view all the data collected by the air monitors. </p>
                                             <i>Readings above the red line exceed the US EPA Risk Threshold.</i>
                                             <br><br>
@@ -252,7 +259,7 @@ body <- bs4DashBody(
                          ),
                          
                          data.step = 4,
-                         data.intro = "<h5>4. Date Selection</h5>
+                         data.intro = "<h5>Date Selection</h5>
                                             <p>Click and drag each end of the slider to change which dates are shown in the Main Graph.</p>
                              <p>Notice how the data averages in the right column change based on the dates you select!</p>"
                        )
@@ -299,7 +306,7 @@ body <- bs4DashBody(
                        valueBoxOutput("vermontValueBox", width = 12),
                        
                        data.step = 2,
-                       data.intro = "<h5>2. Data Averages</h5>
+                       data.intro = "<h5>Data Averages</h5>
                                             <p>These are the average readings from each air monitor within the selected time frame.</p>
                      <p>By default, these averages are from the whole range of available data.</p>",
                        data.position = "left"
@@ -338,7 +345,7 @@ body <- bs4DashBody(
                          )
                        ),
                        data.step = 3,
-                       data.intro = HTML("<h5>3. The EPA Risk Threshold Limit</h5>
+                       data.intro = HTML("<h5>The EPA Risk Threshold Limit</h5>
                        <p>Over a lifetime, exposure to levels of hex chrome above this limit may put individuals at a higher risk of developing cancer.</p>
                       <b>Remember: </b>  <i>Readings above the red line exceed the US EPA Risk Threshold.</i>"),
                        data.position = "left"
@@ -386,7 +393,7 @@ body <- bs4DashBody(
                                                                          margin-top: 15px;"
                        ),
                        data.step = 5,
-                       data.intro = HTML("<h5>5. Tutorial Complete!</h5>
+                       data.intro = HTML("<h5>Tutorial Complete!</h5>
                                            <p>If you'd like to start the tutorial again, just click this button.</p>"),
                        data.position = "left"
                      )
@@ -415,7 +422,7 @@ body <- bs4DashBody(
                             solidHeader = TRUE,
                             HTML("The source code for this app is open source and free to use!<br><br>"),
                             actionButton("githubButton", "View the code on GitHub",
-                                         onclick ="window.open('https://github.com/', '_blank')")
+                                         onclick ="window.open('https://github.com/elizabutter/CEH-Paramount-Community-Data/tree/master', '_blank')")
                             
                         )
                         
@@ -474,8 +481,8 @@ axisTitleFont <- list(family = 'Arial',
                       size = 18,
                       color = 'rgb(82, 82, 82)')
 
-graphTitleFont <- list(family = 'Arial',
-                       size = 22,
+graphTitleFont <- list(family = 'Source Sans Pro',
+                       size = 24,
                        
                        color = 'rgb(82, 82, 82)')
 
@@ -673,9 +680,12 @@ output$myBackground <- renderUI({
   introModal <- modalDialog(
     id = "introModal",
     title = "Welcome!",
-    HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/ScMzIvxBSi4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+    HTML("<div class='polaroid'; style = 'text-align: center;'>",
+      '<iframe width="100%" height="315" src="https://www.youtube.com/embed/YbFk_MwKSpY" title="Community-Led Air Monitoring for Hexavalent Chromium in Paramount, CA " frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+      "</div>",
       "<br>",
-         "<p>In this app, you can view the air monitor data collected in Paramount, CA.</p><b>Click the Start Tutorial button below for a brief walkthrough on how to use the app!</b>"),
+      "<p>In this app, you can view the air monitor data collected in Paramount, CA.</p><b>Click the Start Tutorial button below for a brief walkthrough on how to use the app!</b>",
+    ),
     easyClose = TRUE,
     size = "l",
     footer = tagList(
@@ -899,7 +909,8 @@ output$myBackground <- renderUI({
       tickcolor = 'rgb(204, 204, 204)',
       tickwidth = 2,
       ticklen = 7,
-      tickfont = tickFont
+      tickfont = tickFont,
+      fixedrange = TRUE
     )
     
     
@@ -914,7 +925,8 @@ output$myBackground <- renderUI({
       tickvals = c( 0.01, seq(
         from = 0.5, to = 10, by = 0.25
       )),
-      tickmode = "array"
+      tickmode = "array",
+      fixedrange = TRUE
       #  ticksuffix = " ng/m3  "
     )
     
@@ -924,7 +936,7 @@ output$myBackground <- renderUI({
       autoexpand = FALSE,
       l = 75,
       r = 5,
-      t = 0,
+      t = 15,
       b = 45
     )
     
@@ -975,7 +987,9 @@ output$myBackground <- renderUI({
       source = "hoverplotsource"
       
       
-    ) %>% 
+    )%>%
+      config(displaylogo = FALSE,
+             modeBarButtons = list(list("toImage"))) %>% 
       #here's the trace for the vermont data, with it's own visual customizations.
       add_trace(
         data = vermontData,
@@ -1015,7 +1029,8 @@ output$myBackground <- renderUI({
       #These are all the visual layout components are loaded in.
       layout(
         title = list(
-          text = HTML("<b>Paramount Community Air Monitoring Data</b>"),
+          text = HTML("Paramount Community Air Monitoring Data"),
+          font = graphTitleFont,
           x = 0.03,
           y = 0.98),
         # annotations = epaThresholdTitle,
@@ -1138,13 +1153,15 @@ images: [],
       HTML(
         '
               <p style="margin: 0px">
-                  <b>', "Average Levels of Hex Chrome",'
+                  <b style="font-size: 1.5rem; line-height: 0.2;" >', "Average Levels of <br> Hex Chrome",'
                   </b>
                 </p>
-        <table>
+              <hr style = "border-top: 0.10rem solid ; border-radius: 5px; margin: 0px; margin-top: 9px; opacity: 0.3; width: 50%; color: black;">
+
+        <table style = "margin-top: 5px">
             <tr>
               <td>
-                <p>
+                <p style = "margin-bottom: 0px">
                 <b>
                   <i data-html="true"; style="font-size: 22px; padding-top:10px"; class="fa fa-info-circle"; id="somersetIcon"; data-toggle="tooltip"; data-placement="left"; 
                   title="', tooltipText[[1]][1], '"></i>
@@ -1152,7 +1169,7 @@ images: [],
                 </p>
               </td>
               <td style="padding-left:10px";> 
-                <h2>
+                <h2  style = "margin-bottom: 0px">
                   <b>', paste0(averageByDate[[2]][1] , " ng/m3"),'
                   </b>
                 </h2>
@@ -1184,14 +1201,17 @@ images: [],
       
       HTML(
         '
-                      <p style="margin: 0px">
-                  <b>', "Average Levels of Hex Chrome",'
+              <p style="margin: 0px">
+                  <b style="font-size: 1.5rem; line-height: 0.2;" >', "Average Levels of <br> Hex Chrome",'
                   </b>
                 </p>
-        <table
+                
+              <hr style = "border-top: 0.10rem solid ; border-radius: 5px; margin: 0px; margin-top: 9px; opacity: 0.3; width: 50%; color: black;">
+
+      <table style = "margin-top: 5px">
             <tr>
               <td>
-                <p>
+                <p style = "margin-bottom: 0px">
                 <b>
                   <i data-html="true"; style="font-size: 22px; padding-top:10px"; class="fa fa-info-circle"; data-toggle="tooltip"; data-placement="left"; 
                   title="', tooltipText[[1]][1], '"></i>

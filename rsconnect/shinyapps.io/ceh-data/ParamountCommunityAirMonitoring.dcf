@@ -1,0 +1,13 @@
+name: ParamountCommunityAirMonitoring
+title: ParamountCommunityAirMonitoring
+username:
+account: ceh-data
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9258630
+bundleId: 7312180
+url: https://ceh-data.shinyapps.io/ParamountCommunityAirMonitoring/
+when: 1686071346.6639
+lastSyncTime: 1686071346.66391
+asMultiple: FALSE
+asStatic: FALSE
