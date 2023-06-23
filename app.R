@@ -353,15 +353,15 @@ body <- bs4DashBody(
                      
                      
                      
-                     actionButton(
-                       "dataAboutButton",
-                       "About This Data",
-                       icon("info-circle"),
-                       style =
-                         "color: #fff; background-color: #337ab7;
-                                                                         border-color: #2e6da4;
-                                                                         margin-left: 8px;"
-                     ),
+                     # actionButton(
+                     #   "dataAboutButton",
+                     #   "About This Data",
+                     #   icon("info-circle"),
+                     #   style =
+                     #     "color: #fff; background-color: #337ab7;
+                     #                                                     border-color: #2e6da4;
+                     #                                                     margin-left: 8px;"
+                     # ),
                      
                      
                      # introBox(
