@@ -54,6 +54,14 @@ header <- dashboardHeader(
                '<img class="header-picture" src="ceh.logo.rgb.FNL_2.png" width = "105px">',
                  "</div>"),
   
+  span(
+actionButton("languageButton", "Español",
+                        status = "secondary",
+             icon("globe"),
+               onclick ="window.open('https://ceh-data.shinyapps.io/MonitoreoDelAireEnParamount/', '_blank')"),
+  style = "position:absolute;right:5em;"
+  ),
+  
   #load the creator credit button on the top right of the user interface
   rightUi = userOutput("user")
 )
